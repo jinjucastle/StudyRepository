@@ -30,6 +30,7 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter(const FObjectInitializer& Obj
 
 	CustomCharactorMovementComponent = Cast<UCustomCharacterMovementComponent>(GetCharacterMovement());
 	CustomMotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("CustomMotionWarping"));
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
@@ -54,6 +55,10 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter(const FObjectInitializer& Obj
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 

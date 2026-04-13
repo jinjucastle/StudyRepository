@@ -52,4 +52,9 @@ private:
 	FVector AnimVelocity;
 	void GetAnimVelocity();
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character Animation", meta = (AllowPrivateAccess = "true"))
+	float GroundDistance = -1.0f;
+
+
+	
 };

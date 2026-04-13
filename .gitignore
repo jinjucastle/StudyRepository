@@ -569,7 +569,8 @@ FodyWeavers.xsd
 content/Assets/*
 content/VFX_Asset/*
 content/SFX_Asset/*
-content/Enemy_Asset/*
+content/Characters/Heroes/*
+content/WeaponSniper/*
 
 # Rider .idea all ignore
 .idea/*

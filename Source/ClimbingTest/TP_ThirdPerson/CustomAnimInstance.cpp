@@ -29,6 +29,9 @@ void UCustomAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	GetIsFalling();
 	GetIsClimbing();
 	GetAnimVelocity();
+
+	const FTestCharacterGroundInfo& GroundInfo = CustomCharacterMovement->GetGroundInfo();
+	GroundDistance = GroundInfo.GroundDistance;
 }
 
 void UCustomAnimInstance::GetGroundSpeed()

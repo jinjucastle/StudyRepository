@@ -24,6 +24,23 @@ namespace ECustomMovementMode
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct FTestCharacterGroundInfo
+{
+	GENERATED_BODY();
+
+	FTestCharacterGroundInfo() : LastUpdateFrame(0),GroundDistance(0.0f){}
+
+	uint64 LastUpdateFrame;
+
+	UPROPERTY(BlueprintReadOnly)
+	FHitResult GroundHitResult;
+
+	UPROPERTY(BlueprintReadOnly)
+	float GroundDistance;
+};
+
+
 UCLASS()
 class CLIMBINGTEST_API UCustomCharacterMovementComponent : public UCharacterMovementComponent
 {
@@ -31,6 +48,9 @@ class CLIMBINGTEST_API UCustomCharacterMovementComponent : public UCharacterMove
 public:
 	FOnEnterClimbState OnEnterClimbState;
 	FOnExitClimbState OnExitClimbState;
+
+	UFUNCTION(BlueprintCallable, Category="Test|CharactorMovement")
+	const FTestCharacterGroundInfo& GetGroundInfo();
 
 protected: 
 	virtual void BeginPlay() override;
@@ -154,4 +174,9 @@ public:
 	void RequestHopping();
 	
 	FORCEINLINE FVector GetClimbableSurfaceNormal()const { return CurrentClimbableSurfaceNormal; }
+
+	protected:
+		FTestCharacterGroundInfo CachedGroundInfo;
+
+		
 };

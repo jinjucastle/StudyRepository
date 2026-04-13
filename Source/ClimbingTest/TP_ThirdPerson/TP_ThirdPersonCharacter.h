@@ -26,12 +26,31 @@ class ATP_ThirdPersonCharacter : public ACharacter
 public:
 	ATP_ThirdPersonCharacter(const FObjectInitializer& ObjectInitializer);
 
+
+protected:
+	// APawn interface
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	// To add mapping context
+	virtual void BeginPlay();
+
+public:
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	/** Returns FollowCamera subobject **/
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	FORCEINLINE class UCustomCharacterMovementComponent* GetCustomCharacterMovement()const { return CustomCharactorMovementComponent; }
+	FORCEINLINE class UMotionWarpingComponent* GetMotionWarpingComponent()const { return CustomMotionWarpingComponent; }
+
 private:
 	void OnPlayerEnterClimb();
 	void OnPlayerExitClimb();
 
 	void CustomAddInputMappingContext(UInputMappingContext* MappingContext, int32 InPriority);
 	void CustomRemoveInputMappingContext(UInputMappingContext* MappingContext);
+
+
 
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -40,6 +59,9 @@ private:
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USkeletalMeshComponent> Weapon;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UCustomCharacterMovementComponent* CustomCharactorMovementComponent;
@@ -86,21 +108,5 @@ private:
 	void HandleClimbMovementInput(const FInputActionValue& Value);
 
 	void OnClimbHopActionStarted(const FInputActionValue& Value);
-
-protected:
-	// APawn interface
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-	// To add mapping context
-	virtual void BeginPlay();
-
-public:
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	FORCEINLINE class UCustomCharacterMovementComponent* GetCustomCharacterMovement()const { return CustomCharactorMovementComponent; }
-	FORCEINLINE class UMotionWarpingComponent* GetMotionWarpingComponent()const { return CustomMotionWarpingComponent; }
 };
 
